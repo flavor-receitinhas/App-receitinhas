@@ -18,7 +18,7 @@ class _ContainerProfileImageState extends State<ContainerProfileImage> {
           Navigator.pushNamed(
             context,
             MyProfilePage.route,
-            arguments: Global.profile,
+            arguments: {'profile': Global.profile},
           ).then((value) => setState(() {}));
         },
         child: Container(

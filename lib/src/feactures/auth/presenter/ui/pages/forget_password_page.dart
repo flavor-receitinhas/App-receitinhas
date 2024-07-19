@@ -1,4 +1,3 @@
-import 'package:app_receitas/src/core/global/global_variables.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_button.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_text.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_text_field.dart';
@@ -7,6 +6,7 @@ import 'package:app_receitas/src/feactures/auth/presenter/ui/organisms/custom_sc
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_manager/export_manager.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
   static const route = '/forget-password';
@@ -16,15 +16,9 @@ class ForgetPasswordPage extends StatefulWidget {
   State<ForgetPasswordPage> createState() => _ForgetPasswordPageState();
 }
 
-class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
-  AuthController ct = di();
+class _ForgetPasswordPageState
+    extends ManagerPage<AuthController, ForgetPasswordPage> {
   final formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    ct.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,19 +69,20 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
             if (formKey.currentState!.validate()) {
               await ct.forgetPassword();
               ct.emailController.clear();
-
-              final snackBar = SnackBar(
-                content: CookieText(
-                  text: AppLocalizations.of(context)!.forgetPasswordTextSnack,
-                  color: theme.onSecondary,
-                ),
-                action: SnackBarAction(
-                  label:
-                      AppLocalizations.of(context)!.forgetPasswordOptionSnack,
-                  onPressed: () {},
-                ),
-              );
-              snack.showSnackBar(snackBar);
+              if (context.mounted) {
+                final snackBar = SnackBar(
+                  content: CookieText(
+                    text: AppLocalizations.of(context)!.forgetPasswordTextSnack,
+                    color: theme.onSecondary,
+                  ),
+                  action: SnackBarAction(
+                    label:
+                        AppLocalizations.of(context)!.forgetPasswordOptionSnack,
+                    onPressed: () {},
+                  ),
+                );
+                snack.showSnackBar(snackBar);
+              }
             }
           },
         ),

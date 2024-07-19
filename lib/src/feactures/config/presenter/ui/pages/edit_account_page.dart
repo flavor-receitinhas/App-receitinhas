@@ -11,6 +11,7 @@ import 'package:app_receitas/src/feactures/onboarding/presenter/validator_onboar
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_manager/manager_page.dart';
 
 class EditAccountPage extends StatefulWidget {
   static const route = '/edit-account';
@@ -20,18 +21,8 @@ class EditAccountPage extends StatefulWidget {
   State<EditAccountPage> createState() => _EditAccountPageState();
 }
 
-class _EditAccountPageState extends State<EditAccountPage> {
-  final EditAccountController ct = di();
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => ct.init());
-    ct.addListener(() {
-      setState(() {});
-    });
-    super.initState();
-  }
-
+class _EditAccountPageState
+    extends ManagerPage<EditAccountController, EditAccountPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -62,7 +53,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
           }
         },
       ),
-      done: (_) => SafeArea(
+      done: () => SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

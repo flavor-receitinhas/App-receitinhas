@@ -1,13 +1,11 @@
 import 'package:app_receitas/src/core/global/global_variables.dart';
-import 'package:app_receitas/src/core/widgets/feactures/cookie_page.dart';
 import 'package:app_receitas/src/feactures/onboarding/domain/repositories/user_omboarding_repository.dart';
-import 'package:app_receitas/src/feactures/onboarding/presenter/ui/pages/onboarding_page.dart';
 import 'package:app_receitas/src/feactures/profile/domain/repositories/profile_repository.dart';
 import 'package:app_receitas/src/feactures/recipes/domain/entities/recipe_entity.dart';
 import 'package:app_receitas/src/feactures/recipes/domain/repositories/recipe_repository.dart';
-import 'package:flutter/material.dart';
+import 'package:page_manager/export_manager.dart';
 
-class HomeController extends ChangeNotifier {
+class HomeController extends ManagerStore {
   final RecipeRepository _recipeRepository;
   final UserOmboardingRepository _userFoodPrefRepository;
   final ProfileRepository _profileRepository;
@@ -15,17 +13,15 @@ class HomeController extends ChangeNotifier {
   HomeController(this._recipeRepository, this._userFoodPrefRepository,
       this._profileRepository);
 
-  PageState state = PageState.loading;
   List<RecipeEntity> recipes = [];
 
-  Future<void> init(BuildContext context) async {
-    await verifyOnboading().then((value) =>
-        value ? Navigator.pushNamed(context, OnBoardingPage.route) : null);
-    await loadingProfile();
-    recipes = await listRecipe();
-    state = PageState.done;
-    notifyListeners();
-  }
+  @override
+  void init(Map<String, dynamic> arguments) => handleTry(
+        call: () async {
+          await loadingProfile();
+          recipes = await listRecipe();
+        },
+      );
 
   Future<List<RecipeEntity>> listRecipe() async {
     return await _recipeRepository.listRecipe();

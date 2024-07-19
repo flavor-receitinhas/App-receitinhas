@@ -1,4 +1,3 @@
-import 'package:app_receitas/src/core/global/global_variables.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_button.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_text.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_text_button.dart';
@@ -6,9 +5,9 @@ import 'package:app_receitas/src/core/widgets/feactures/cookie_text_field.dart';
 import 'package:app_receitas/src/feactures/auth/presenter/controllers/auth_controller.dart';
 import 'package:app_receitas/src/feactures/auth/presenter/ui/organisms/custom_screen.dart';
 import 'package:app_receitas/src/feactures/auth/presenter/ui/pages/forget_password_page.dart';
-import 'package:app_receitas/src/feactures/home/presenter/ui/pages/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_manager/manager_page.dart';
 
 class LoginPage extends StatefulWidget {
   static const route = '/login';
@@ -18,19 +17,21 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ManagerPage<AuthController, LoginPage> {
   @override
-  void dispose() {
-    ct.dispose();
-    super.dispose();
+  void initState() {
+    ct.onNavigation(
+      (event) => Navigator.pushNamedAndRemoveUntil(
+        context,
+        event,
+        (route) => false,
+      ),
+    );
+    super.initState();
   }
-
-  AuthController ct = di();
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-    final snack = ScaffoldMessenger.of(context);
     return CustomScreen(
       iconAppBar: IconButton(
         onPressed: () => Navigator.pop(context),
@@ -69,27 +70,7 @@ class _LoginPageState extends State<LoginPage> {
           CookieButton(
             label: 'Google',
             onPressed: () async {
-              final result = await ct.loginGoogle();
-              if (!result && context.mounted) {
-                final snackBar = SnackBar(
-                  content: CookieText(
-                    text: AppLocalizations.of(context)!.registerTextSnack,
-                    color: theme.onSecondary,
-                  ),
-                  action: SnackBarAction(
-                    label: AppLocalizations.of(context)!.registerOptionSnack,
-                    onPressed: () {},
-                  ),
-                );
-                snack.showSnackBar(snackBar);
-              }
-              if (result && context.mounted) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  CustomBottomBar.route,
-                  (route) => false,
-                );
-              }
+              await ct.loginGoogle();
             },
           ),
           const SizedBox(height: 10),
@@ -111,27 +92,7 @@ class _LoginPageState extends State<LoginPage> {
           margin: const EdgeInsets.symmetric(horizontal: 12),
           label: AppLocalizations.of(context)!.loginButton,
           onPressed: () async {
-            var result = await ct.loginFirebase();
-            if (!result && context.mounted) {
-              final snackBar = SnackBar(
-                content: CookieText(
-                  text: AppLocalizations.of(context)!.loginTextSnack,
-                  color: theme.onSecondary,
-                ),
-                action: SnackBarAction(
-                  label: AppLocalizations.of(context)!.loginOptionSnack,
-                  onPressed: () {},
-                ),
-              );
-              snack.showSnackBar(snackBar);
-            }
-            if (result && mounted) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                CustomBottomBar.route,
-                (route) => false,
-              );
-            }
+            await ct.loginFirebase();
           },
         ),
         const SizedBox(height: 5)

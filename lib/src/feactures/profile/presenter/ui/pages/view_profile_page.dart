@@ -8,6 +8,7 @@ import 'package:app_receitas/src/feactures/profile/presenter/controller/profile_
 import 'package:app_receitas/src/feactures/profile/presenter/ui/atomic/appbar_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:page_manager/manager_page.dart';
 
 class ViewProfilePage extends StatefulWidget {
   static const route = '/view-profile';
@@ -17,23 +18,14 @@ class ViewProfilePage extends StatefulWidget {
   State<ViewProfilePage> createState() => _ViewProfilePageState();
 }
 
-class _ViewProfilePageState extends State<ViewProfilePage> {
-  final ProfileController ct = di();
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => ct.init(context));
-    ct.addListener(() {
-      setState(() {});
-    });
-    super.initState();
-  }
-
+class _ViewProfilePageState
+    extends ManagerPage<ProfileController, ViewProfilePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     return CookiePage(
       state: ct.state,
-      done: (_) => SafeArea(
+      done: () => SafeArea(
         child: ListView(
           children: [
             const AppBarProfile(

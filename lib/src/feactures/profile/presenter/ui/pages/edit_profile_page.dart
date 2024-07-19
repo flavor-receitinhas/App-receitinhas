@@ -1,4 +1,3 @@
-import 'package:app_receitas/src/core/global/global_variables.dart';
 import 'package:app_receitas/src/core/global/image_profile_enum.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_button.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_page.dart';
@@ -13,6 +12,7 @@ import 'package:app_receitas/src/feactures/profile/presenter/ui/moleculs/contain
 import 'package:app_receitas/src/feactures/profile/presenter/ui/moleculs/save_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:page_manager/export_manager.dart';
 
 class EditProfilePage extends StatefulWidget {
   static const route = '/edit-perfil';
@@ -24,24 +24,8 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
-  EditProfileController ct = di();
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => ct.init(context));
-    ct.addListener(() {
-      setState(() {});
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    ct.dispose();
-    super.dispose();
-  }
-
+class _EditProfilePageState
+    extends ManagerPage<EditProfileController, EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -66,7 +50,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ).show(context);
         },
       ),
-      done: (_) => ListView(
+      done: () => ListView(
         children: [
           const AppBarProfile(
             title: 'Seu perfil',

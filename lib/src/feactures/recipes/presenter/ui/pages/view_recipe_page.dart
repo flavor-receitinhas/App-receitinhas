@@ -1,4 +1,3 @@
-import 'package:app_receitas/src/core/global/global_variables.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_button.dart';
 import 'package:app_receitas/src/core/widgets/feactures/cookie_page.dart';
 import 'package:app_receitas/src/feactures/recipes/presenter/controller/view_recipe_controller.dart';
@@ -6,6 +5,7 @@ import 'package:app_receitas/src/feactures/recipes/presenter/ui/moleculs/view_de
 import 'package:app_receitas/src/feactures/recipes/presenter/ui/moleculs/view_introduce_recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:page_manager/export_manager.dart';
 
 class ViewRecipesPage extends StatefulWidget {
   static const route = '/view-recipe';
@@ -15,29 +15,18 @@ class ViewRecipesPage extends StatefulWidget {
   State<ViewRecipesPage> createState() => _ViewRecipesPageState();
 }
 
-class _ViewRecipesPageState extends State<ViewRecipesPage> {
-  final ViewRecipeController ct = di();
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => ct.init(context));
-    ct.addListener(() {
-      setState(() {});
-    });
-
-    super.initState();
-  }
-
+class _ViewRecipesPageState
+    extends ManagerPage<ViewRecipeController, ViewRecipesPage> {
   @override
   Widget build(BuildContext context) {
     return CookiePage(
       state: ct.state,
       appBar: AppBar(
-        surfaceTintColor: Theme.of(context).colorScheme.background,
+        surfaceTintColor: Theme.of(context).colorScheme.surface,
         automaticallyImplyLeading: false,
         titleSpacing: 0,
         title: const CookieButton(label: 'Voltar').back(context),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       // bottomNavigationBar: Padding(
       //   padding: const EdgeInsets.all(10),
@@ -46,7 +35,7 @@ class _ViewRecipesPageState extends State<ViewRecipesPage> {
       //     onPressed: () {},
       //   ),
       // ),
-      done: (_) => SafeArea(
+      done: () => SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           children: [

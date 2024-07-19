@@ -34,7 +34,7 @@ class ResultRecipes extends StatelessWidget {
                     Navigator.pushNamed(
                       context,
                       ViewRecipesPage.route,
-                      arguments: recipe.id,
+                      arguments: {'id': recipe.id},
                     );
                   },
                   child: RecipeSearchContainer(

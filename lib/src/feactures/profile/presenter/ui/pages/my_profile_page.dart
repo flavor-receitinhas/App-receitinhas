@@ -9,6 +9,7 @@ import 'package:app_receitas/src/feactures/profile/presenter/ui/atomic/appbar_pr
 import 'package:app_receitas/src/feactures/profile/presenter/ui/pages/edit_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:page_manager/export_manager.dart';
 
 class MyProfilePage extends StatefulWidget {
   static const route = '/my-perfil';
@@ -18,24 +19,14 @@ class MyProfilePage extends StatefulWidget {
   State<MyProfilePage> createState() => _MyProfilePageState();
 }
 
-class _MyProfilePageState extends State<MyProfilePage> {
-  final ProfileController ct = di();
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => ct.init(context));
-    ct.addListener(() {
-      setState(() {});
-    });
-    super.initState();
-  }
-
+class _MyProfilePageState
+    extends ManagerPage<ProfileController, MyProfilePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     return CookiePage(
       state: ct.state,
-      done: (_) => SafeArea(
+      done: () => SafeArea(
         child: ListView(
           children: [
             const AppBarProfile(
@@ -100,7 +91,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             Navigator.pushNamed(
                               context,
                               EditProfilePage.route,
-                              arguments: ct.profile.copyWith(),
+                              arguments: {'profile' : ct.profile},
                             ).then((value) {
                               if (value == true) {
                                 ct.getProfile(Global.user!.id);

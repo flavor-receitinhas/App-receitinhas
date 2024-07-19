@@ -1,13 +1,13 @@
 import 'package:app_receitas/src/core/global/global_variables.dart';
 import 'package:app_receitas/src/core/services/api/api_error/api_error.dart';
-import 'package:app_receitas/src/core/widgets/feactures/cookie_page.dart';
 import 'package:app_receitas/src/feactures/onboarding/domain/entities/user_food_pref_entity.dart';
 import 'package:app_receitas/src/feactures/onboarding/domain/enums/dietary_restriction_enum.dart';
 import 'package:app_receitas/src/feactures/onboarding/domain/enums/proteins_enum.dart';
 import 'package:app_receitas/src/feactures/onboarding/domain/repositories/user_omboarding_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:page_manager/export_manager.dart';
 
-class EditAccountController extends ChangeNotifier {
+class EditAccountController extends ManagerStore {
   final UserOmboardingRepository _onBoardingRepository;
 
   EditAccountController(this._onBoardingRepository);
@@ -15,15 +15,15 @@ class EditAccountController extends ChangeNotifier {
   TextEditingController userNameController = TextEditingController();
   final List<Proteins> selectProteins = [];
   final List<DietaryRestrictions> selectRestriction = [];
-  var state = PageState.loading;
   UserFoodPrefEntity? userPref;
 
-  Future<void> init() async {
-    userNameController.text = Global.profile?.name ?? '';
-    await loadingOnBoardingPrefs();
-    state = PageState.done;
-    notifyListeners();
-  }
+  @override
+  void init(Map<String, dynamic> arguments) => handleTry(
+        call: () async {
+          userNameController.text = Global.profile?.name ?? '';
+          await loadingOnBoardingPrefs();
+        },
+      );
 
   Future<String?> updateNameProfile() async {
     try {
