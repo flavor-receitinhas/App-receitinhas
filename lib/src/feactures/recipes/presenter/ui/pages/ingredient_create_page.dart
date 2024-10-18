@@ -76,12 +76,7 @@ class _IngredientCreatePageState extends State<IngredientCreatePage> {
                             arguments: {
                               'ingredients': widget.ct.listIngredientSelect,
                             }).then((value) {
-                          if (value != null) {
-                            setState(() {
-                              widget.ct.listIngredientSelect =
-                                  (value as Map)['ingredients'];
-                            });
-                          }
+                          setState(() {});
                         });
                       },
                       child: Column(

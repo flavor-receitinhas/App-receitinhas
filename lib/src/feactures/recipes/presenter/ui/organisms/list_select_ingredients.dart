@@ -8,8 +8,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ListSelectIngredients extends StatelessWidget {
   final List<IngredientRecipeEntity> ingredients;
   final void Function(IngredientRecipeEntity indexIngredient) deleteOnPressed;
-  const ListSelectIngredients(
-      {super.key, required this.ingredients, required this.deleteOnPressed});
+
+  const ListSelectIngredients({
+    super.key,
+    required this.ingredients,
+    required this.deleteOnPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

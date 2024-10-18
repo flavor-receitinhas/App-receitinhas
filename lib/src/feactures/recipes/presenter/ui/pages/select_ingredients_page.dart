@@ -20,38 +20,6 @@ class _SelectIngredientsPageState
   Widget build(BuildContext context) {
     return CookiePage(
       state: ct.state,
-      // floatingActionButton: FloatingActionButton(
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(50),
-      //   ),
-      //   backgroundColor: Theme.of(context).colorScheme.primary,
-      //   onPressed: () {
-      //     CookieSheetBottom(
-      //       alignmentTitle: Alignment.center,
-      //       title: CookieText(
-      //         text: 'Não encontrou seu igrediente ?',
-      //         typography: CookieTypography.title,
-      //         color: Theme.of(context).colorScheme.onSecondary,
-      //       ),
-      //       body: Column(
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         children: [
-      //           CookieText(
-      //             text: 'Digite ele no campo abaixo',
-      //             color: Theme.of(context).colorScheme.onSecondary,
-      //           ),
-      //           const SizedBox(height: 10),
-      //           const CookieTextField.outline(
-      //             hintText: 'Digite o ingrediente',
-      //           ),
-      //           const SizedBox(height: 20),
-      //           const CookieButton(label: 'Confirmar')
-      //         ],
-      //       ),
-      //     ).show(context);
-      //   },
-      //   child: const Icon(Icons.question_mark_outlined),
-      // ),
       done: () => SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -62,12 +30,7 @@ class _SelectIngredientsPageState
                   const SizedBox(height: 10),
                   CookieButton(
                     label: AppLocalizations.of(context)!.recipeDifficultyBack,
-                    onPressed: () {
-                      Navigator.pop(
-                        context,
-                        {'ingredients': ct.listIngredientSelect},
-                      );
-                    },
+                    onPressed: () => Navigator.pop(context),
                   ).back(context),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
