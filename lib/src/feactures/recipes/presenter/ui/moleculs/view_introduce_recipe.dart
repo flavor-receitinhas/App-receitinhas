@@ -11,13 +11,17 @@ class ViewIntroduceRecipe extends StatelessWidget {
   final int timePrepared;
   final int portion;
   final String difficultyRecipe;
-  const ViewIntroduceRecipe(
-      {super.key,
-      required this.title,
-      required this.subTitle,
-      required this.timePrepared,
-      required this.portion,
-      required this.difficultyRecipe});
+  final bool isCreate;
+
+  const ViewIntroduceRecipe({
+    super.key,
+    required this.title,
+    required this.subTitle,
+    required this.timePrepared,
+    required this.portion,
+    required this.difficultyRecipe,
+    this.isCreate = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -78,23 +82,26 @@ class ViewIntroduceRecipe extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  topLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(10),
+            Visibility(
+              visible: !isCreate,
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(10),
+                  ),
                 ),
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.favorite,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 30,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.favorite,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 30,
+                  ),
                 ),
               ),
             ),

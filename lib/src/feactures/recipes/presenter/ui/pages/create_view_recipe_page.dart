@@ -38,7 +38,7 @@ class CreateViewRecipePage extends StatelessWidget {
               child: Column(
                 children: [
                   FlutterCarousel(
-                      options: FlutterCarouselOptions (
+                      options: FlutterCarouselOptions(
                         height: 250,
                         showIndicator: true,
                         autoPlay: true,
@@ -52,6 +52,7 @@ class CreateViewRecipePage extends StatelessWidget {
                           .toList()),
                   const SizedBox(height: 10),
                   ViewIntroduceRecipe(
+                    isCreate: true,
                     title: ct.titleController.text,
                     difficultyRecipe: ct.difficultyRecipeString,
                     portion: ct.portion,
