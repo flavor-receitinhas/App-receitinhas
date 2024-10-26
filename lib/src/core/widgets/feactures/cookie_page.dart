@@ -6,7 +6,7 @@ class CookiePage extends StatelessWidget {
   final Widget Function() done;
   final StateManager state;
   final Widget Function()? loading;
-  final Object? error;
+  final Exception? error;
   final PreferredSizeWidget? appBar;
   final Widget? floatingActionButton;
   const CookiePage({
@@ -30,13 +30,13 @@ class CookiePage extends StatelessWidget {
       pageInitial: () => Center(
         child: loading != null ? loading!() : const CircularProgressIndicator(),
       ),
-      pageError: (_) => const CookiePageError(),
-      pageDisconnected: () => const CookiePageError(),
+      pageError: (_) => CookiePageError(error: error),
+      pageDisconnected: () => CookiePageError(error: error),
       pageLoading: () => Center(
         child: loading != null ? loading!() : const CircularProgressIndicator(),
       ),
-      pageLoggedOut: () => const CookiePageError(),
-      pageMaintenance: () => const CookiePageError(),
+      pageLoggedOut: () => CookiePageError(error: error),
+      pageMaintenance: () => CookiePageError(error: error),
     );
   }
 }
