@@ -10,15 +10,15 @@ class CookiePageError extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const CookieButton(label: 'Voltar').back(context),
             const Spacer(),
-            const CookieText(
-              text: '404',
-              typography: CookieTypography.title,
+            Center(
+              child: const CookieText(
+                text: '404',
+                typography: CookieTypography.title,
+              ),
             ),
             const CookieText(
-              text: 'Alguma coisa deu errado, mas não se preocupe.',
-            ),
+                text: 'Alguma coisa deu errado, mas não se preocupe.'),
             const Spacer(),
           ],
         ),
