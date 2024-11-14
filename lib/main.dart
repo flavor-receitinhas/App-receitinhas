@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:app_receitas/src/core/global/global_variables.dart';
 import 'package:app_receitas/src/core/inject/inject.dart';
 import 'package:app_receitas/src/core/routes/generate_route.dart';
 import 'package:app_receitas/src/core/services/language/language_controller.dart';
 import 'package:app_receitas/src/core/themes/custom_theme.dart';
 import 'package:app_receitas/src/core/themes/theme.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +16,13 @@ void main() async {
   GenerateRoute().registerRoutes();
   Inject.inicialize();
   await Firebase.initializeApp();
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   runApp(MyApp());
 }
 
